@@ -1,0 +1,51 @@
+<app-navbar (onBuscar)="aplicarFiltrosLocal($event)"></app-navbar>
+
+<!-- Sección con fondo verde -->
+<section class="bg-green-500 text-white py-8 px-6 w-full mt-10">
+  <h2 class="text-4xl mb-4">Nuestros Servicios</h2>
+  <p class="text-lg max-w-4xl mx-auto">
+    Descubre una variedad de servicios diseñados para satisfacer tus necesidades. Ya sea que busques aventuras turísticas, alojamiento confortable o experiencias únicas, nuestros emprendedores locales están comprometidos a brindarte lo mejor de Capachica. Cada servicio refleja el esfuerzo, la dedicación y la pasión de los empresarios locales que hacen de esta región un lugar especial para visitar y disfrutar.
+  </p>
+</section>
+
+<!-- Mensajes de estado -->
+<div class="max-w-7xl mx-auto mt-6 px-6">
+  <div *ngIf="isLoading" class="text-center text-gray-600 text-lg py-4">
+    Cargando servicios...
+  </div>
+
+  <div *ngIf="!isLoading && servicios.length === 0" class="text-center text-gray-500 text-lg py-4">
+    No se encontraron servicios con los filtros seleccionados.
+  </div>
+</div>
+
+<!-- Grid de tarjetas de servicios -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-4 max-w-7xl mx-auto px-6">
+  <ng-container *ngFor="let servicio of servicios">
+    <div
+      class="bg-white rounded-lg shadow-lg overflow-hidden transition-transform transform hover:translate-y-1 h-[400px] cursor-pointer"
+      (click)="verDetallesServicios(servicio.id)"
+    >
+      <!-- Imagen de la tarjeta -->
+      <img
+        [src]="servicio.imagenes.length > 0 ? 'https://twsevdzjdnwjhdysvecm.supabase.co/storage/v1/object/public/servicios/' + servicio.imagenes[0]?.url : 'img/fam1.png'"
+        alt="Imagen del servicio"
+        class="rounded-t-xl w-full h-1/2 object-cover"
+      />
+      <div class="p-4">
+        <!-- Título de la tarjeta -->
+        <h3 class="text-xl font-semibold text-gray-800 mb-3">{{ servicio.nombre }}</h3>
+        
+        <!-- Descripción de la tarjeta -->
+        <p class="text-gray-600 mb-4">
+          {{ servicio.descripcion }}
+        </p>
+        
+        <!-- Precio de la tarjeta -->
+        <div class="flex justify-end items-end">
+          <span class="text-lg font-semibold text-green-600">Precio: {{ servicio.moneda }} {{ servicio.precioBase }}</span>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+</div>

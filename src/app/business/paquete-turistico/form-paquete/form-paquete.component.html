@@ -1,0 +1,94 @@
+<div class="flex">
+  <app-sidebar class="w-[260px] fixed h-screen z-20"></app-sidebar>
+  <div class="flex-1 ml-[260px]">
+    <app-navbar class="fixed top-0 left-[260px] right-0 h-[64px] z-10 bg-white border-b"></app-navbar>
+
+    <div class="m-[80px]">
+      <div class="max-w-4xl mx-auto p-6 bg-white rounded-lg shadow-lg">
+        <h2 class="text-2xl font-bold mb-4 text-gray-800">
+          {{ isEdit ? 'Editar Paquete Turístico' : 'Registrar Paquete Turístico' }}
+        </h2>
+        <form [formGroup]="paqueteForm" (ngSubmit)="guardarPaquete()" enctype="multipart/form-data">
+          <div class="space-y-6">
+            <div class="grid md:grid-cols-2 gap-6">
+              <!-- Nombre -->
+              <div>
+                <label class="block font-medium text-gray-700">Nombre</label>
+                <input type="text" formControlName="nombre" placeholder="Nombre del Paquete" class="border p-3 rounded w-full" required />
+              </div>
+
+              <!-- Descripción -->
+              <div>
+                <label class="block font-medium text-gray-700">Descripción</label>
+                <textarea formControlName="descripcion" placeholder="Descripción del Paquete" class="border p-3 rounded w-full" required></textarea>
+              </div>
+
+              <!-- Precio -->
+              <div>
+                <label class="block font-medium text-gray-700">Precio</label>
+                <input type="number" formControlName="precio" placeholder="Precio" class="border p-3 rounded w-full" required />
+              </div>
+
+              <!-- Estado -->
+              <div>
+                <label class="block font-medium text-gray-700">Estado</label>
+                <select formControlName="estado" class="border p-3 rounded w-full">
+                  <option value="activo">Activo</option>
+                  <option value="inactivo">Inactivo</option>
+                </select>
+              </div>
+
+              <!-- Imagen de Perfil -->
+              <div>
+                <label class="block font-medium text-gray-700">Imagen de Perfil</label>
+                <input type="file" accept="image/*" (change)="onFileChange($event)" class="border p-3 rounded w-full" />
+                <div *ngIf="previewUrl" class="mt-2">
+                  <img [src]="previewUrl" alt="Vista previa" class="w-32 h-32 object-cover rounded border shadow" />
+                </div>
+              </div>
+              <div class="md:col-span-2">
+                <label class="block font-medium text-gray-700">Emprendimiento</label>
+                <select formControlName="emprendimientoId" class="border p-3 rounded w-full" required>
+                  <option *ngFor="let emprendimiento of emprendimiento" [value]="emprendimiento.id">
+                    {{ emprendimiento.nombre }}
+                  </option>
+                </select>
+              </div>
+              
+              <div class="md:col-span-2" formArrayName="servicios">
+                <label class="block font-medium text-gray-700">Servicios</label>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <ng-container *ngFor="let servicio of serviciosDisponibles; let i = index">
+                    <label class="flex items-start space-x-3" [attr.for]="'svc'+i">
+                      <input 
+                        type="checkbox" 
+                        [formControlName]="i" 
+                        [id]="'svc'+i"
+                        class="w-5 h-5 border-2 border-gray-600 rounded-sm mt-1" 
+                      />
+                      <div>
+                        <span class="font-medium text-gray-700">{{ servicio.nombre }}</span>
+                        <p class="text-sm text-gray-500">{{ servicio.descripcion }}</p>
+                      </div>
+                    </label>
+                  </ng-container>
+                </div>
+              </div>
+              
+            </div>
+
+            <!-- Botones de acción -->
+            <div class="flex justify-end gap-6 mt-6">
+              <button type="submit" class="bg-green-600 text-white px-8 py-3 rounded hover:bg-green-700">
+                {{ isEdit ? 'Actualizar' : 'Guardar' }}
+              </button>
+              <button type="button" class="bg-gray-300 text-gray-800 px-8 py-3 rounded hover:bg-gray-400" (click)="cancelar()">
+                Cancelar
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

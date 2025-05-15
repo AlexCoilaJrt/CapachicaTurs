@@ -1,0 +1,96 @@
+<div class="flex">
+  <app-sidebar class="w-[260px] fixed h-screen z-20"></app-sidebar>
+  <div class="flex-1 ml-[260px]">
+    <app-navbar class="fixed top-0 left-[260px] right-0 h-[64px] z-10 bg-white border-b"></app-navbar>
+
+    <div class="m-[80px]">
+      <div class="max-w-4xl mx-auto p-6 bg-white rounded-lg shadow-lg">
+        <h2 class="text-2xl font-bold mb-4 text-gray-800">
+          {{ isEdit ? 'Editar Servicio' : 'Registrar Servicio' }}
+        </h2>
+        <form [formGroup]="servicioForm" (ngSubmit)="guardarServicio()" enctype="multipart/form-data">
+          <div class="space-y-6">
+            <div class="grid md:grid-cols-2 gap-6">
+              <!-- Nombre del Servicio -->
+              <div>
+                <label class="block font-medium text-gray-700">Nombre</label>
+                <input type="text" formControlName="nombre" placeholder="Nombre del servicio" class="border p-3 rounded w-full" required />
+              </div>
+
+              <!-- Descripción del Servicio -->
+              <div>
+                <label class="block font-medium text-gray-700">Descripción</label>
+                <input type="text" formControlName="descripcion" placeholder="Descripción del servicio" class="border p-3 rounded w-full" required />
+              </div>
+
+              <!-- Precio Base -->
+              <div>
+                <label class="block font-medium text-gray-700">Precio Base</label>
+                <input type="number" formControlName="precioBase" placeholder="Precio base" class="border p-3 rounded w-full" required />
+              </div>
+
+              <!-- Moneda -->
+              <div>
+                <label class="block font-medium text-gray-700">Moneda</label>
+                <input type="text" formControlName="moneda" placeholder="Moneda (ej. PEN)" class="border p-3 rounded w-full" required />
+              </div>
+
+              <!-- Estado -->
+              <div>
+                <label class="block font-medium text-gray-700">Estado</label>
+                <select formControlName="estado" class="border p-3 rounded w-full" required>
+                  <option value="activo">Activo</option>
+                  <option value="inactivo">Inactivo</option>
+                </select>
+              </div>
+              <div>
+                <label class="block font-medium text-gray-700">Tipo de Servicio</label>
+                <select formControlName="tipoServicioId" class="border p-3 rounded w-full" required>
+                  <option *ngFor="let tipo of tiposServicio" [value]="tipo.id">{{ tipo.nombre }}</option>
+                </select>
+              </div>
+              <!-- Detalles del Servicio -->
+              <div>
+                <label class="block font-medium text-gray-700">Duración</label>
+                <input type="text" formControlName="duracion" placeholder="Duración (ej. 2 horas)" class="border p-3 rounded w-full" />
+              </div>
+
+              <div>
+                <label class="block font-medium text-gray-700">Capacidad</label>
+                <input type="number" formControlName="capacidad" placeholder="Capacidad" class="border p-3 rounded w-full" />
+              </div>
+
+              <div>
+                <label class="block font-medium text-gray-700">Incluye</label>
+                <input type="text" formControlName="incluye" placeholder="Ej. Guía local, Transporte" class="border p-3 rounded w-full" />
+              </div>
+
+              <div>
+                <label class="block font-medium text-gray-700">Requisitos</label>
+                <input type="text" formControlName="requisitos" placeholder="Ej. Ropa cómoda, Zapatillas" class="border p-3 rounded w-full" />
+              </div>
+
+              <!-- Imagen del Servicio -->
+              <div>
+                <label class="block font-medium text-gray-700">Imagen del Servicio</label>
+                <input type="file" accept="image/*" (change)="onFileChange($event)" class="border p-3 rounded w-full" />
+                <div *ngIf="previewUrl" class="mt-2">
+                  <img [src]="previewUrl" alt="Vista previa" class="w-32 h-32 object-cover rounded border shadow" />
+                </div>
+              </div>
+            </div>
+
+            <div class="flex justify-end gap-6 mt-6">
+              <button type="submit" class="bg-green-600 text-white px-8 py-3 rounded hover:bg-green-700">
+                {{ isEdit ? 'Actualizar' : 'Guardar' }}
+              </button>
+              <button type="button" class="bg-gray-300 text-gray-800 px-8 py-3 rounded hover:bg-gray-400" (click)="cancelar()">
+                Cancelar
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

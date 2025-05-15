@@ -1,0 +1,143 @@
+<!-- NAVBAR FIJO -->
+<div class="fixed top-0 left-0 w-full z-50 bg-white shadow">
+  <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+    
+    <!-- Logo con routerLink -->
+    <a routerLink="/">
+      <img src="assets/logo-capachica.png" class="h-24 cursor-pointer" alt="Logo Capachica" />
+    </a>
+    
+    <!-- Buscador -->
+<div class="flex-1 relative h-12 flex justify-center items-center">
+  <nav class="absolute flex gap-4 font-medium text-gray-700 transition-all w-full">
+    <div class="flex border rounded-full shadow h-16 overflow-hidden max-w-4xl mx-auto w-full">
+      
+      <!-- ¿Qué buscas? -->
+      <div class="w-1/3 px-4 py-3 border-r">
+        <input
+          list="busquedas"
+          [(ngModel)]="searchSelection"
+          placeholder="¿Qué buscas?"
+          class="w-full border rounded px-3 py-2"
+          autocomplete="off"
+        />
+        <datalist id="busquedas">
+          <option *ngFor="let n of emprendimientoNombres" [value]="n"></option>
+          <option *ngFor="let p of paqueteNombres" [value]="p"></option>
+          <option *ngFor="let s of tiposServicios" [value]="s"></option>
+        </datalist>
+      </div>
+
+      <!-- ¿Dónde? -->
+      <div class="w-1/3 px-4 py-3 border-r">
+        <input
+          list="lugares"
+          [(ngModel)]="searchSelectionLugar"
+          placeholder="¿Dónde?"
+          class="w-full border rounded px-3 py-2"
+          autocomplete="off"
+        />
+        <datalist id="lugares">
+          <option *ngFor="let loc of lugarOpciones" [value]="loc"></option>
+        </datalist>
+      </div>
+
+      <!-- ¿Cuándo? -->
+      <div class="w-1/3 px-4 py-3">
+        <input
+          type="date"
+          [(ngModel)]="fechaInferior"
+          class="w-full border rounded px-3 py-2"
+        />
+      </div>
+
+      <!-- Botón Buscar -->
+      <div class="flex items-center px-4">
+        <button
+          (click)="buscar()"
+          class="px-4 py-2 bg-green-500 text-white rounded-full hover:bg-green-600"
+        >
+          <i class="fas fa-search"></i>
+        </button>
+      </div>
+    </div>
+  </nav>
+</div>
+
+    <!-- Login/Register -->
+    <div class="flex gap-4">
+      <button routerLink="/login" class="px-4 py-2 border rounded-xl hover:bg-gray-100">Ingresar</button>
+      <button routerLink="/register" class="px-4 py-2 bg-green-500 text-white rounded-xl hover:bg-green-600">Registrarse</button>
+    </div>
+  </div>
+
+  <!-- Categorías -->
+  <div *ngIf="!ocultarNav" class="flex justify-center items-center gap-6 overflow-x-auto text-sm text-gray-600 p-4 bg-white flex-wrap">
+    <button routerLink="/prinemprendimiento" routerLinkActive="text-green-600" class="flex flex-col items-center hover:text-green-600">
+      <i class="fas fa-store"></i>
+      <span>Emprendimientos</span>
+    </button>
+    <button routerLink="/prinlugares" routerLinkActive="text-green-600" class="flex flex-col items-center hover:text-green-600">
+      <i class="fas fa-landmark"></i>
+      <span>Lugares Turísticos</span>
+    </button>
+    <button
+      *ngFor="let tipo of tiposServicio"
+      [routerLink]="['/prinservicios', tipo.id]"
+      routerLinkActive="text-green-600"
+      (click)="refreshData(tipo.id)"
+      class="flex flex-col items-center hover:text-green-600"
+    >
+      <i class="fas fa-cogs"></i>
+      <p>{{ tipo.nombre }}</p>
+    </button>
+  </div>
+
+  <!-- Resultados -->
+  <div *ngIf="resultados.length" class="mt-8 px-6">
+    <h2 class="text-2xl font-semibold mb-6">Resultados</h2>
+    <div class="grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
+      <div
+        *ngFor="let item of resultados"
+        class="group bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-shadow duration-300"
+      >
+        <!-- Imagen -->
+        <div class="h-48 bg-gray-100 flex items-center justify-center overflow-hidden">
+          <img
+            *ngIf="item.imagenUrl; else placeholder"
+            [src]="item.imagenUrl"
+            alt="{{ item.nombre }}"
+            class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+          />
+          <ng-template #placeholder>
+            <span class="text-gray-400">Sin imagen</span>
+          </ng-template>
+        </div>
+
+        <!-- Contenido -->
+        <div class="p-4 flex flex-col h-full">
+          <div class="flex justify-between items-center mb-2">
+            <h3 class="text-lg font-bold text-gray-800 line-clamp-1">{{ item.nombre }}</h3>
+            <span *ngIf="item.precio" class="text-green-600 font-semibold">S/{{ item.precio }}</span>
+          </div>
+
+          <p class="text-sm text-gray-600 mb-4 line-clamp-2">{{ item.descripcion }}</p>
+
+          <div class="mt-auto flex items-center justify-between">
+            <button
+              (click)="router.navigate([tipoBusqueda, item.id])"
+              class="px-4 py-2 bg-green-500 text-white rounded-full text-sm font-medium hover:bg-green-600 transition-colors"
+            >
+              Ver más
+            </button>
+
+            <div *ngIf="item.rating" class="flex items-center text-yellow-500 text-sm">
+              <i class="fas fa-star mr-1"></i> {{ item.rating }}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+

@@ -1,0 +1,386 @@
+<app-navbar></app-navbar>
+<div class="ml-32 mr-32">
+    <section class="text-black py-8 px-6 w-full mt-40">
+        <h2 class="text-4xl font-bold mb-4">
+            {{ servicios.nombre }}
+        </h2>
+        <div class="flex justify-center items-center gap-6 mt-8">
+            <div class="w-full md:w-1/2 lg:w-1/3">
+                <img [src]="
+            servicios.imagenes.length > 0
+              ? 'https://twsevdzjdnwjhdysvecm.supabase.co/storage/v1/object/public/servicios/' +
+                servicios.imagenes[0]?.url
+              : 'img/fam1.png'
+          " alt="Imagen del slider" class="rounded-t-xl w-full h-1/2 object-cover" />
+            </div>
+            <!-- <div class="w-full md:w-1/2 lg:w-1/3">
+                <button class="text-green-600 hover:text-green-800">
+                    Mostrar todas las fotos
+                </button>
+            </div> -->
+        </div>
+    </section>
+    <section class="bg-white p-6 mt-8 grid grid-cols-1 md:grid-cols-3 gap-6">
+        <!-- Columna Izquierda (2/3 ancho en md+) -->
+        <div class="md:col-span-2">
+            <h2 class="text-2xl font-bold text-gray-800 mb-4">
+                {{ servicios.nombre }}
+            </h2>
+            <p class="text-sm text-gray-600 mb-4">
+                {{ servicios.detallesServicio.capacidad }} huéspedes · 2 habitaciones ·
+                4 camas · 2 baños
+            </p>
+            <!-- anfitrion -->
+            <div class="flex items-center p-4 border-b border-gray-200">
+                <div class="flex-shrink-0 mr-3">
+                    <div class="relative w-12 h-12 rounded-full overflow-hidden">
+                        <img src="https://via.placeholder.com/48" alt="Foto de perfil de Barbara"
+                            class="object-cover w-full h-full" />
+                    </div>
+                </div>
+                <div class="flex flex-col">
+                    <div class="flex items-center">
+                        <h3 class="text-lg font-medium text-gray-900">
+                            Anfitrión: Barbara
+                        </h3>
+                    </div>
+                    <p class="text-sm text-gray-600">
+                        Superanfitrión · 2 años anfitrionando
+                    </p>
+                </div>
+            </div>
+            <div class="container mx-auto px-4 py-6">
+                <!-- Características del alojamiento -->
+                <div class="space-y-8">
+                    <!-- Ideal para comer en casa -->
+                    <div class="flex items-start">
+                        <div class="flex-shrink-0 w-12">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gray-700" fill="none"
+                                viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                                    d="M19 8h2a1 1 0 010 2h-2v2a1 1 0 01-2 0v-2h-2a1 1 0 010-2h2V6a1 1 0 012 0v2zM9 12a3 3 0 100-6 3 3 0 000 6z" />
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                                    d="M3 10v2a7 7 0 0014 0v-2" />
+                            </svg>
+                        </div>
+                        <div class="ml-4">
+                            <h3 class="text-lg font-medium text-gray-900">
+                                Ideal para comer en casa
+                            </h3>
+                            <p class="text-gray-600 mt-1">
+                                En este alojamiento, tienes todo lo que necesitas para cocinar y
+                                comer.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Diversión al aire libre -->
+                    <div class="flex items-start">
+                        <div class="flex-shrink-0 w-12">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gray-700" fill="none"
+                                viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                                    d="M3 15a4 4 0 004 4h9a5 5 0 10-4.5-8.5" />
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                                    d="M13 8V4m0 0h4m-4 0L7 8" />
+                            </svg>
+                        </div>
+                        <div class="ml-4">
+                            <h3 class="text-lg font-medium text-gray-900">
+                                Diversión al aire libre
+                            </h3>
+                            <p class="text-gray-600 mt-1">
+                                Comodidades fantásticas para los viajes de verano como una
+                                cocina al aire libre, a la piscina, una zona para cenar al aire
+                                libre y una zona de parrilla.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Cancelación gratuita -->
+                    <div class="flex items-start">
+                        <div class="flex-shrink-0 w-12">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gray-700" fill="none"
+                                viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                                    d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                            </svg>
+                        </div>
+                        <div class="ml-4">
+                            <h3 class="text-lg font-medium text-gray-900">
+                                Cancelación gratuita antes de las 3:00 p.m. del 10 may
+                            </h3>
+                            <p class="text-gray-600 mt-1">
+                                Si cambias de opinión, recibirás un reembolso total.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Separador inferior -->
+                <div class="border-t border-gray-200 my-6"></div>
+
+                <!-- Descripción del alojamiento -->
+                <div class="text-gray-700">
+                    <p class="mb-4">
+                        {{ servicios.descripcion }}
+                    </p>
+                </div>
+            </div>
+            <div class="container mx-auto px-4 py-6">
+                <h2 class="text-2xl font-bold text-gray-900 mb-6">
+                    Lo que este lugar ofrece
+                </h2>
+
+                <div *ngIf="servicios.length > 0; else noSercivios"
+                    class="grid grid-cols-1 md:grid-cols-2 gap-y-6 gap-x-8">
+                    <div *ngFor="let item of servicios.detallesServicio.incluye" class="flex items-center">
+                        <div class="flex-shrink-0 w-8 h-8 mr-4">
+                            <span class="text-gray-800">{{ item }}</span>
+                        </div>
+                    </div>
+                </div>
+                <ng-template #noSercivios>
+                    <p>No se encontraron lo que ofrece para este servicio.</p>
+                </ng-template>
+            </div>
+        </div>
+
+        <!-- Columna Derecha (1/3 ancho en md+) -->
+        <div class="md:col-span-1 space-y-6">
+            <div class="container mx-auto px-4 py-6">
+                <!-- Precio -->
+                <div class="flex flex-col justify-start">
+                    <span class="text-lg font-semibold text-green-600">
+                        S/ {{ servicios.precioBase }} por noche
+                    </span>
+                </div>
+                <h1 class="text-2xl font-bold text-gray-900">Reserva tu estancia</h1>
+
+                <form [formGroup]="dateForm" class="mt-6">
+                    <div class="flex items-center">
+                        <div class="relative">
+                            <input id="startDate" formControlName="startDate" type="date"
+                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg p-2.5 w-full" />
+                        </div>
+                        <span class="mx-4 text-gray-500">to</span>
+                        <div class="relative">
+                            <input id="endDate" formControlName="endDate" type="date"
+                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg p-2.5 w-full" />
+                        </div>
+                    </div>
+                </form>
+
+                <div *ngIf="nights !== null" class="mt-4 text-lg text-gray-900">
+                    Total de noches seleccionadas: {{ nights }} noches.
+                </div>
+                <div *ngIf="nights !== null" class="mt-4 text-lg text-gray-900">
+                    Total a pagar: 
+                                        <span class="text-lg font-semibold text-green-600">
+                    {{ servicios.precioBase * nights }}
+                    {{ servicios.moneda }}
+                    </span>
+
+                </div>
+                <div *ngIf="nights === null && dateForm.valid" class="mt-4 text-lg text-gray-900">
+                    Selecciona un rango de fechas para ver el número de noches y precio.
+                </div>
+            </div>
+
+            <!-- Huéspedes -->
+            <div class="m-3">
+                <p class="font-semibold">Huéspedes</p>
+                <select class="p-2 border border-gray-300 rounded-lg w-full">
+                    <option>1 huésped</option>
+                    <option>2 huéspedes</option>
+                    <option>3 huéspedes</option>
+                    <option>4 huéspedes</option>
+                    <option>5 huéspedes</option>
+                    <option>6 huéspedes</option>
+                </select>
+            </div>
+
+            <!-- Botón centrado -->
+            <div class="flex justify-center">
+                <button class="w-1/2 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700">
+                    Reservar
+                </button>
+            </div>
+        </div>
+    </section>
+    <div class="container mx-auto px-4 py-6">
+        <!-- Separador superior -->
+        <div class="border-t border-gray-200 mb-6"></div>
+        <h2 class="text-2xl font-bold text-gray-900 mb-6">Reseñas</h2>
+        <!-- Lista de reseñas -->
+        <div class="space-y-8">
+            <!-- Reseña 1: Jorge -->
+            <div *ngIf="resenas.length > 0; else noResenas" class="flex">
+                <div *ngFor="let resena of resenas">
+                    <div class="flex-shrink-0 mr-4">
+                        <div class="w-12 h-12 rounded-full overflow-hidden">
+                            <img [src]="
+                  usuarios.imagenes.length > 0
+                    ? usuarios.imagenes[0]
+                    : 'img/fam1.png'
+                " alt="{{ usuarios.nombre }}" class="rounded-t-xl w-full h-[250px] object-cover" />
+                        </div>
+                    </div>
+                    <div class="flex-grow">
+                        <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center mb-1">
+                            <div>
+                                <h3 class="font-medium text-gray-900">
+                                    {{
+                                    usuarios.persona.nombre ||
+                                    "Nombre no
+                                    disponible"
+                                    }}
+                                </h3>
+                            </div>
+                        </div>
+                        <div class="flex items-center mb-1">
+                            <div>
+                                <ng-container *ngFor="let i of [].constructor(5); let idx = index">
+                                    <i class="fas fa-star" [class.text-yellow-500]="idx < resena.calificacion"
+                                        [class.text-gray-300]="idx >= resena.calificacion">
+                                    </i>
+                                </ng-container>
+                            </div>
+                            <span class="mx-2 text-gray-500">·</span>
+                            <span class="text-sm text-gray-600">Hace 1 semana</span>
+                        </div>
+                        <p class="text-gray-800">
+                            {{ resena.comentario }}
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <ng-template #noResenas>
+                <p>No se encontraron reseñas para este servicio.</p>
+            </ng-template>
+        </div>
+    </div>
+
+    <section class="bg-white p-6 rounded-lg shadow-md mt-8">
+        <!-- Título -->
+        <h2 class="text-2xl font-bold text-gray-800">A dónde irás</h2>
+        <!-- Subtítulo -->
+        <p class="text-sm text-gray-600 mt-1">
+            San Bartolo, Provincia de Lima, Perú
+        </p>
+        <!-- Mapa embebido -->
+        <div class="mt-4 overflow-hidden rounded-lg">
+            <iframe
+                src="https://maps.google.com/maps?q=San%20Bartolo,%20Provincia%20de%20Lima,%20Per%C3%BA&t=&z=13&ie=UTF8&iwloc=&output=embed"
+                class="w-full h-64 sm:h-80 md:h-96" style="border: 0" allowfullscreen="" loading="lazy"
+                referrerpolicy="no-referrer-when-downgrade">
+            </iframe>
+        </div>
+    </section>
+    <!-- Sección “Conoce al anfitrión” -->
+    <section class="mt-8 grid grid-cols-1 lg:grid-cols-2 gap-8">
+        <!-- Tarjeta izquierda -->
+        <div class="bg-white rounded-2xl shadow-md p-6 flex flex-col items-center">
+            <div class="relative">
+                <img src="https://via.placeholder.com/150" alt="Barbara" class="w-32 h-32 rounded-full object-cover" />
+                <!-- Icono de verificado -->
+                <div
+                    class="absolute bottom-0 right-0 bg-pink-600 w-10 h-10 rounded-full flex items-center justify-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-white" fill="none" viewBox="0 0 24 24"
+                        stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M9 12l2 2l4 -4m5 2a9 9 0 11-18 0a9 9 0 0118 0z" />
+                    </svg>
+                </div>
+            </div>
+            <h3 class="mt-4 text-2xl font-bold">Barbara</h3>
+            <p class="flex items-center text-gray-600 mt-1">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 mr-1 text-gray-500" viewBox="0 0 20 20"
+                    fill="currentColor">
+                    <path d="M10 2a6 6 0 016 6v2a2 2 0 01-2 2h-1v2l-3-2l-3 2v-2H6a2 2 0 01-2-2V8a6 6 0 016-6z" />
+                </svg>
+                Superanfitrión
+            </p>
+
+            <div class="mt-6 w-full border-t border-gray-200 pt-4 space-y-4">
+                <div class="flex justify-between">
+                    <span class="font-semibold text-lg">93</span>
+                    <span class="text-gray-500">Reseñas</span>
+                </div>
+                <div class="flex justify-between items-center">
+                    <span class="font-semibold text-lg">4.87<span class="text-yellow-500">★</span></span>
+                    <span class="text-gray-500">Calificación</span>
+                </div>
+                <div class="flex justify-between">
+                    <span class="font-semibold text-lg">2</span>
+                    <span class="text-gray-500">Años anfitrionando</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Detalles y llamada a la acción -->
+        <div class="flex flex-col justify-between">
+            <div>
+                <h2 class="text-2xl font-bold mb-2">Barbara es Superanfitrión</h2>
+                <p class="text-gray-700 mb-6">
+                    Los Superanfitriones tienen mucha experiencia, tienen valoraciones
+                    excelentes y se esfuerzan al máximo para ofrecerles a los huéspedes
+                    estadías maravillosas.
+                </p>
+
+                <h3 class="text-xl font-semibold mb-2">
+                    Información sobre el anfitrión
+                </h3>
+                <p class="text-gray-700 mb-1">
+                    <span class="font-semibold">Índice de respuesta:</span> 100 %
+                </p>
+                <p class="text-gray-700">
+                    <span class="font-semibold">Responde en menos de una hora</span>
+                </p>
+            </div>
+
+            <button
+                class="mt-6 px-6 py-3 bg-gray-900 text-white rounded-lg hover:bg-gray-800 w-full lg:w-auto text-center">
+                Mensaje con el anfitrión
+            </button>
+        </div>
+    </section>
+
+    <!-- Sección de información adicional y bio -->
+    <section class="mt-8 space-y-6">
+        <ul class="space-y-3">
+            <li class="flex items-center text-gray-700">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 mr-2 text-gray-500" fill="none"
+                    viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M3 5h12M9 3v2m0 16v2m8-18h2M5 21h2m12-2v-2m0-12V3m4 4h-2m-6 0H7m0 16H5m16 0h-2" />
+                </svg>
+                Hablo inglés y español
+            </li>
+            <li class="flex items-center text-gray-700">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 mr-2 text-gray-500" fill="none"
+                    viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M12 8c-1.104 0-2 .896-2 2s.896 2 2 2s2-.896 2-2s-.896-2-2-2zm0-6C6.477 2 2 6.477 2 12s4.477 10 10 10s10-4.477 10-10S17.523 2 12 2z" />
+                </svg>
+                Vive en Lima, Perú
+            </li>
+        </ul>
+
+        <p class="text-gray-700">
+            Hola, soy Barbara! Mamá de familia, alquilo un lindo dpto totalmente
+            equipado, con una hermosa vista al...
+            <a href="#" class="text-black font-semibold">Mostrar más &rsaquo;</a>
+        </p>
+
+        <div class="border-t border-gray-200 pt-4 flex items-center text-sm text-gray-600">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 mr-2 text-pink-600" fill="none" viewBox="0 0 24 24"
+                stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M12 14l9-5l-9-5l-9 5l9 5z M12 14l6.16-3.422M12 14l-6.16-3.422M12 14v7" />
+            </svg>
+            Para proteger tus pagos, usa siempre Airbnb a la hora de transferir dinero
+            y comunicarte con los anfitriones.
+        </div>
+    </section>
+</div>
