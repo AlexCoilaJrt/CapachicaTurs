@@ -2,7 +2,7 @@
 <div class="flex">
     <app-sidebar></app-sidebar>
     <div class="flex-1 ml-64">
-      <app-navbar class="fixed top-0 left-[260px] right-0 h-[64px] z-10 bg-white border-b"></app-navbar>
+      <app-navbar (onBuscar)="aplicarFiltro()"></app-navbar>
       <div class="mt-[64px] p-6 w-full">
           <div class="flex justify-between items-center mb-6 flex-wrap gap-4">
             <button
@@ -13,17 +13,21 @@
   
             <div class="flex gap-2 items-center">
               <select [(ngModel)]="columnaBusqueda"
-                class="px-4 py-2 border rounded-lg focus:outline-none focus:ring focus:border-blue-300">
-                <option value="nombre">Nombre</option>
-                <option value="descripcion">Descripción</option>
-                <option value="requiereCupo">Requiere Cupo</option>
-              </select>
+        (ngModelChange)="aplicarFiltro()"
+        class="px-4 py-2 border rounded-lg focus:outline-none focus:ring focus:border-blue-300">
+  <option value="nombre">Nombre</option>
+  <option value="descripcion">Descripción</option>
+  <option value="requiereCupo">Requiere Cupo</option>
+</select>
+
   
               <input
-                type="text"
-                [(ngModel)]="filtroBusqueda"
-                placeholder="Buscar"
-                class="px-4 py-2 border rounded-lg w-64 focus:outline-none focus:ring focus:border-blue-300" />
+  type="text"
+  [(ngModel)]="filtroBusqueda"
+  (ngModelChange)="aplicarFiltro()"
+  placeholder="Buscar"
+  class="px-4 py-2 border rounded-lg w-64 focus:outline-none focus:ring focus:border-blue-300" />
+
             </div>
           </div>
   

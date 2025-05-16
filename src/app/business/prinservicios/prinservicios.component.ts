@@ -17,10 +17,10 @@ import { FormsModule } from '@angular/forms';
 })
 export class PrinserviciosComponent implements OnInit {
   isLoading: boolean = false;
-  servicios: any[] = [];
+  serviciosOriginal: any[] = []; // Lista completa
+  servicios: any[] = [];         // Lista filtrada para mostrar
   tipoServicioId: string = "";
 
-  // VARIABLES PARA FILTRADO
   filtroNombre: string = '';
   filtroLugar: string = '';
   filtroFecha: string = '';
@@ -34,7 +34,6 @@ export class PrinserviciosComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    // Leer filtros desde query params para inicializar inputs
     this.route.queryParams.subscribe(params => {
       this.filtroNombre = params['nombre'] || '';
       this.filtroLugar = params['lugar'] || '';
@@ -52,8 +51,9 @@ export class PrinserviciosComponent implements OnInit {
       } else {
         const resultadosGuardados = this.busquedaService.getResultados();
         if (resultadosGuardados && resultadosGuardados.length > 0) {
+          this.serviciosOriginal = resultadosGuardados;
           this.servicios = resultadosGuardados;
-          this.enriquecerServiciosConReseñas(this.servicios);
+          this.enriquecerServiciosConReseñas(this.serviciosOriginal);
         } else {
           this.obtenerServiciosConReseñas();
         }
@@ -68,8 +68,9 @@ export class PrinserviciosComponent implements OnInit {
 
     this.servicioService.listarServiciosPorTipo(this.tipoServicioId).subscribe({
       next: (res: any[]) => {
+        this.serviciosOriginal = res;
         this.servicios = res;
-        this.enriquecerServiciosConReseñas(this.servicios);
+        this.enriquecerServiciosConReseñas(this.serviciosOriginal);
         this.isLoading = false;
       },
       error: (err) => {
@@ -96,8 +97,9 @@ export class PrinserviciosComponent implements OnInit {
     this.isLoading = true;
     this.busquedaService.buscarConFiltros(filtros).subscribe({
       next: (data: any[]) => {
+        this.serviciosOriginal = data;
         this.servicios = data;
-        this.enriquecerServiciosConReseñas(this.servicios);
+        this.enriquecerServiciosConReseñas(this.serviciosOriginal);
         this.isLoading = false;
       },
       error: (error) => {
@@ -107,15 +109,12 @@ export class PrinserviciosComponent implements OnInit {
     });
   }
 
-  // MÉTODO PARA FILTRAR LOCALMENTE
   aplicarFiltrosLocal(filtros: { nombre: string; lugar: string; fecha: string }) {
-    // Actualizar variables de filtro con el evento recibido
     this.filtroNombre = filtros.nombre || '';
     this.filtroLugar = filtros.lugar || '';
     this.filtroFecha = filtros.fecha || '';
-  
-    // Filtrar localmente
-    this.servicios = this.servicios.filter(servicio => {
+
+    this.servicios = this.serviciosOriginal.filter(servicio => {
       const coincideNombre = this.filtroNombre
         ? servicio.nombre?.toLowerCase().includes(this.filtroNombre.toLowerCase())
         : true;
@@ -128,7 +127,6 @@ export class PrinserviciosComponent implements OnInit {
       return coincideNombre && coincideLugar && coincideFecha;
     });
   }
-  
 
   verDetallesServicios(id: number): void {
     this.router.navigate([`/serviciosdetalle/${id}`]);

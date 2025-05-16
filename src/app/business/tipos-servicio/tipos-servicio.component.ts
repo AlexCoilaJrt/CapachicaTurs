@@ -1,4 +1,4 @@
-import { Component, OnInit, DoCheck } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { SidebarComponent } from "../../business/sidebar/sidebar.component";
 import { NavbarComponent } from "../../business/sidebar/navbar/navbar.component";
 import Swal from 'sweetalert2';
@@ -14,7 +14,7 @@ import { TiposServicioService } from '../../core/services/tipos-servicios.servic
   templateUrl: './tipos-servicio.component.html',
   styleUrl: './tipos-servicio.component.css'
 })
-export class TiposServicioComponent implements OnInit, DoCheck {
+export class TiposServicioComponent implements OnInit {
   filtroBusqueda: string = '';
   columnaBusqueda: string = 'nombre';
   isLoading = true;
@@ -31,8 +31,8 @@ export class TiposServicioComponent implements OnInit, DoCheck {
     this.tiposServicioService.listarTiposServicio().subscribe({
       next: (data) => {
         this.tiposServicio = data;
-        this.isLoading = false;
         this.tiposServicioFiltrados = [...this.tiposServicio];
+        this.isLoading = false;
         console.log('Tipos de servicio cargados:', data);
       },
       error: (err) => {
@@ -41,7 +41,7 @@ export class TiposServicioComponent implements OnInit, DoCheck {
     });
   }
 
-  ngDoCheck(): void {
+  aplicarFiltro(): void {
     const texto = this.filtroBusqueda.toLowerCase();
 
     this.tiposServicioFiltrados = this.tiposServicio.filter((t) => {
@@ -53,9 +53,9 @@ export class TiposServicioComponent implements OnInit, DoCheck {
         case 'descripcion':
           return t.descripcion?.toLowerCase().includes(texto);
         case 'requiereCupo':
-          return t.requiereCupo.toString().toLowerCase().includes(texto);
+          return t.requiereCupo?.toString().toLowerCase().includes(texto);
         default:
-          return false;
+          return true;
       }
     });
   }
