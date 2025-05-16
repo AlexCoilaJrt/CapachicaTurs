@@ -61,6 +61,16 @@ export class DetprinEmprendimientoComponent implements OnInit {
         if (this.emprendimiento.latitud && this.emprendimiento.longitud) {
           this.buildMapUrl(this.emprendimiento.latitud, this.emprendimiento.longitud);
         }
+        if (this.emprendimiento.lugarTuristicoId) {
+          this.empService.getLugarTuristico(this.emprendimiento.lugarTuristicoId).subscribe({
+            next: (lugar) => {
+              this.emprendimiento.lugarTuristico = lugar;
+            },
+            error: (err) => {
+              console.error('Error cargando lugar turístico', err);
+            }
+          });
+        }
       },
       error: (err) => {
         console.error('Error cargando emprendimiento:', err);

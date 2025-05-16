@@ -58,6 +58,7 @@ export class NavbarComponent implements OnInit {
 
   ngOnInit(): void {
     initFlowbite();
+    this.determinarTipoBusqueda();
     this.loadEmprendimientoNombres();
     this.loadPaqueteNombres();
     this.loadTiposServicios();
@@ -95,7 +96,7 @@ export class NavbarComponent implements OnInit {
         this.tiposServicios = data.map(s => s.nombre).filter(n => !!n);
       });
   }
-  
+
   private loadLugaresTuristicos() {
     this.lugarService.listarLugares()
       .subscribe((data: any[]) => {
@@ -126,12 +127,9 @@ export class NavbarComponent implements OnInit {
     this.resultados = [];
   }
 
-  
   buscar(): void {
-    // Determina el tipo de búsqueda antes de aplicar filtros
     this.determinarTipoBusqueda();
-  
-    // Arma los filtros en base a lo que hay en los campos
+
     const filtros: FiltrosBusqueda = {
       nombre: this.searchSelection || undefined,
       lugar: this.searchSelectionLugar || undefined,
@@ -139,36 +137,45 @@ export class NavbarComponent implements OnInit {
       fechaHasta: this.fechaSuperior || undefined,
       tipo: this.tipoBusqueda
     };
-  
-    // Publica los filtros al servicio global
+
     this.busquedaService.setFiltros(filtros);
-  
-    // Navegar dinámicamente según tipoBusqueda
+    this.onBuscar.emit({
+      nombre: filtros.nombre || '',
+      lugar: filtros.lugar || '',
+      fecha: filtros.fechaDesde || ''
+    });
+
+    // ⚠️ Este es el único cambio agregado que evita redirigir si ya estás en /prinlugares
+    if (this.router.url.startsWith('/prinlugares') && this.tipoBusqueda === 'lugares') {
+      return; // No navegamos porque ya estás ahí
+    }
+    if (this.router.url.startsWith('/prinservicios') && this.tipoBusqueda === 'servicios') {
+      return; // No navegamos porque ya estás ahí
+    }
+
     switch (this.tipoBusqueda) {
       case 'servicios':
-        // Para servicios, asumo que el nombre es el id o el nombre del tipo
-        // Si tienes un mapping para tipoId, úsalo, si no, navega pasando nombre
         this.router.navigate(['/prinservicios', filtros.nombre || '']);
         break;
-  
+
       case 'emprendimientos':
         this.router.navigate(['/prinemprendimiento'], { queryParams: filtros });
         break;
-  
+
       case 'paquetes':
         this.router.navigate(['/prinpaquetes'], { queryParams: filtros });
         break;
-  
+
       case 'lugares':
         this.router.navigate(['/prinlugares'], { queryParams: filtros });
         break;
-  
+
       default:
-        // Si no se determina tipo, puedes ir a una página general o mostrar error
         this.router.navigate(['/']);
         break;
     }
   }
+
   private detectarTipo(f: { nombre: string; lugar: string; fecha: string }): 'servicios'|'emprendimientos'|'paquetes'|'lugares' {
     if (f.nombre && this.emprendimientoNombres.includes(f.nombre)) return 'emprendimientos';
     if (f.nombre && this.paqueteNombres.includes(f.nombre))         return 'paquetes';
@@ -176,12 +183,10 @@ export class NavbarComponent implements OnInit {
     if (f.lugar && !f.nombre)                                       return 'lugares';
     return 'emprendimientos';
   }
-  
+
   public refreshData(tipoId: string) {
     this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
       this.router.navigate([`/prinservicios`, tipoId]);
     });
   }
-
-
 }

@@ -38,4 +38,11 @@ export class PaquetedetComponent implements OnInit{
       });
     }
   }
+  getImagenUrl(): string {
+    if (this.paquetes.imagenes?.length > 0) {
+      return `https://twsevdzjdnwjhdysvecm.supabase.co/storage/v1/object/public/paquetes-turisticos/${this.paquetes.imagenes[0]}`;
+    }
+    return 'img/fam1.png';
+  }
+  
 } 

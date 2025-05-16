@@ -20,7 +20,10 @@
 </div>
 
 <!-- Grid de tarjetas de servicios -->
-<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-4 max-w-7xl mx-auto px-6">
+<div
+  *ngIf="!isLoading && servicios.length > 0"
+  class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-4 max-w-7xl mx-auto px-6"
+>
   <ng-container *ngFor="let servicio of servicios">
     <div
       class="bg-white rounded-lg shadow-lg overflow-hidden transition-transform transform hover:translate-y-1 h-[400px] cursor-pointer"
@@ -28,19 +31,21 @@
     >
       <!-- Imagen de la tarjeta -->
       <img
-        [src]="servicio.imagenes.length > 0 ? 'https://twsevdzjdnwjhdysvecm.supabase.co/storage/v1/object/public/servicios/' + servicio.imagenes[0]?.url : 'img/fam1.png'"
+        [src]="servicio.imagenes.length > 0
+                ? 'https://twsevdzjdnwjhdysvecm.supabase.co/storage/v1/object/public/servicios/' + servicio.imagenes[0]?.url
+                : 'img/fam1.png'"
         alt="Imagen del servicio"
         class="rounded-t-xl w-full h-1/2 object-cover"
       />
       <div class="p-4">
         <!-- Título de la tarjeta -->
         <h3 class="text-xl font-semibold text-gray-800 mb-3">{{ servicio.nombre }}</h3>
-        
+
         <!-- Descripción de la tarjeta -->
         <p class="text-gray-600 mb-4">
           {{ servicio.descripcion }}
         </p>
-        
+
         <!-- Precio de la tarjeta -->
         <div class="flex justify-end items-end">
           <span class="text-lg font-semibold text-green-600">Precio: {{ servicio.moneda }} {{ servicio.precioBase }}</span>
