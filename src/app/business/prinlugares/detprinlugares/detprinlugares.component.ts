@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { NavbarComponent } from "../../navbar/navbar.component";
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormBuilder, FormGroup } from '@angular/forms';
@@ -7,6 +7,7 @@ import { LugaresService } from '../../../core/services/lugar.service';
 import { initFlowbite } from 'flowbite';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import Swal from 'sweetalert2';
+import { EmprendimientoService } from '../../../core/services/emprendimiento.service';
 
 @Component({
   selector: 'app-detprinlugares',
@@ -24,12 +25,17 @@ export class DetprinlugaresComponent implements OnInit {
   totalPrice: number | null = null;
   nights: number | null = null;
   currentSlide = 0;
+  emprendimientos: any[] = [];
+  
 
   constructor(
     private route: ActivatedRoute,
     private sanitizer: DomSanitizer,
     private lugaresService: LugaresService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private router: Router,
+    private emprendimientoService: EmprendimientoService
+    
   ) {
     this.dateForm = this.fb.group({
       startDate: [''],
@@ -43,6 +49,14 @@ export class DetprinlugaresComponent implements OnInit {
   ngOnInit(): void {
     initFlowbite();
     this.obtenerLugar();
+    this.cargarEmprendimientos();
+
+    
+  }
+  cargarEmprendimientos() {
+    this.emprendimientoService.getEmprendimientos().subscribe((data) => {
+      this.emprendimientos = data;
+    });
   }
 
   obtenerLugar(): void {
@@ -77,38 +91,9 @@ export class DetprinlugaresComponent implements OnInit {
     }
   }
 
-  // Método para agregar al carrito
-  addToCart(): void {
-    let cart: CartItem[] = JSON.parse(localStorage.getItem('cart') || '[]');
-
-    const existingItem = cart.find(item => item.id === this.lugar.id);
-
-    if (existingItem) {
-      Swal.fire({
-        icon: 'info',
-        title: '¡Ya tienes esta reserva!',
-        text: 'Este lugar ya está en tu carrito.',
-        confirmButtonText: 'Aceptar'
-      });
-    } else {
-      const cartItem: CartItem = {
-        id: this.lugar.id,
-        nombre: this.lugar.nombre,
-        precio: this.lugar.precioBase,
-        startDate: this.dateForm.value.startDate,
-        endDate: this.dateForm.value.endDate
-      };
-
-      cart.push(cartItem);
-      localStorage.setItem('cart', JSON.stringify(cart));
-
-      Swal.fire({
-        icon: 'success',
-        title: '¡Lugar añadido al carrito!',
-        text: 'Ahora puedes continuar con la reserva.',
-        confirmButtonText: 'Aceptar'
-      });
-    }
+  
+  goToEmprendimiento(emprendimiento: any) {
+    this.router.navigate(['/emprendimientos', emprendimiento.id]);
   }
 
   resetCarousel() {

@@ -3,10 +3,10 @@
 <div class="mx-auto max-w-7xl px-6">
   <!-- Título principal -->
   <section class="text-black py-16">
-    <h2 class="text-4xl font-bold mb-4 text-center">{{ lugar.nombre }}</h2>
+    <h2 class="text-4xl font-extrabold mb-4 text-center text-gray-900 tracking-tight">{{ lugar.nombre }}</h2>
 
     <!-- Carrusel de imágenes -->
-    <div class="relative w-full h-96 overflow-hidden rounded-xl mt-8">
+    <div class="relative w-full h-96 overflow-hidden rounded-2xl shadow-lg mt-8">
       <ng-container *ngIf="lugar.imagenes?.length; else noImages">
         <div *ngFor="let img of lugar.imagenes; let i = index"
              class="absolute inset-0 transition-opacity duration-700 ease-in-out"
@@ -16,111 +16,111 @@
                alt="Imagen {{ i+1 }}"
                class="w-full h-full object-cover" />
         </div>
-
-        <!-- Flechas -->
-        <button (click)="prevSlide()" class="absolute left-4 top-1/2 -translate-y-1/2 bg-black bg-opacity-50 text-white rounded-full p-2">‹</button>
-        <button (click)="nextSlide()" class="absolute right-4 top-1/2 -translate-y-1/2 bg-black bg-opacity-50 text-white rounded-full p-2">›</button>
+        <button (click)="prevSlide()" class="absolute left-4 top-1/2 -translate-y-1/2 bg-white/70 hover:bg-white text-black shadow-md rounded-full p-2 transition">‹</button>
+        <button (click)="nextSlide()" class="absolute right-4 top-1/2 -translate-y-1/2 bg-white/70 hover:bg-white text-black shadow-md rounded-full p-2 transition">›</button>
       </ng-container>
-
       <ng-template #noImages>
-        <div class="flex items-center justify-center h-full bg-gray-100">
-          <span class="text-gray-500">Sin imágenes</span>
+        <div class="flex items-center justify-center h-full bg-gray-100 rounded-2xl">
+          <span class="text-gray-400 text-lg">Sin imágenes disponibles</span>
         </div>
       </ng-template>
     </div>
   </section>
 
   <!-- Información principal -->
-  <section class="grid grid-cols-1 md:grid-cols-3 gap-10 py-12">
-    <div class="md:col-span-2">
-      <h2 class="text-2xl font-bold text-gray-900 mb-2">{{ lugar.nombre }}</h2>
-      <p class="text-gray-600 mb-4">{{ lugar.descripcion }}</p>
+  <section class="grid grid-cols-1 md:grid-cols-3 gap-10 py-16">
+    <!-- Columna 1 y 2 -->
+    <div class="md:col-span-2 space-y-6">
+      <h2 class="text-3xl font-bold text-gray-800">{{ lugar.nombre }}</h2>
+      <p class="text-gray-700 text-lg">{{ lugar.descripcion }}</p>
 
-      <ul class="space-y-2 text-sm text-gray-700">
-        <li><strong>Dirección:</strong> {{ lugar.direccion }}</li>
-        <li><strong>Coordenadas:</strong> {{ lugar.coordenadas }}</li>
-        <li *ngIf="lugar.costoEntrada !== null"><strong>Costo de entrada:</strong> S/ {{ lugar.costoEntrada }}</li>
-        <li *ngIf="lugar.recomendaciones"><strong>Recomendaciones:</strong> {{ lugar.recomendaciones }}</li>
-        <li *ngIf="lugar.restricciones"><strong>Restricciones:</strong> {{ lugar.restricciones }}</li>
-        <li><strong>Estado:</strong> {{ lugar.estado }}</li>
+      <ul class="space-y-2 text-gray-700 text-base">
+        <li><strong>📍 Dirección:</strong> {{ lugar.direccion }}</li>
+        <li><strong>🗺️ Coordenadas:</strong> {{ lugar.coordenadas }}</li>
+        <li *ngIf="lugar.costoEntrada !== null"><strong>💰 Costo de entrada:</strong> S/ {{ lugar.costoEntrada }}</li>
+        <li *ngIf="lugar.recomendaciones"><strong>✅ Recomendaciones:</strong> {{ lugar.recomendaciones }}</li>
+        <li *ngIf="lugar.restricciones"><strong>⚠️ Restricciones:</strong> {{ lugar.restricciones }}</li>
+        <li><strong>🔒 Estado:</strong> {{ lugar.estado }}</li>
       </ul>
 
-      <div class="mt-6 p-4 flex items-center gap-4 border rounded-xl bg-gray-50">
-        <img src="assets/planet.png" alt="Foto del lugar" class="w-14 h-14 rounded-full object-cover shadow-md" />
+      <div class="mt-8 p-5 flex items-center gap-4 border border-gray-200 rounded-xl bg-gray-50 shadow-sm">
+        <img src="assets/planet.png" alt="Ubicación" 
+             class="w-16 h-16 rounded-full object-cover shadow-md rotate-icon" />
         <div>
-          <h3 class="text-lg font-semibold text-gray-900">Ubicación: {{ lugar.ubicacion }}</h3>
+          <h3 class="text-lg font-semibold text-gray-900">Ubicación exacta</h3>
           <p class="text-sm text-indigo-600">✨ Popular entre los viajeros</p>
         </div>
       </div>
 
-      <div class="mt-8 grid gap-6">
-        <div class="flex gap-4">
-          <div class="p-3 rounded-xl bg-indigo-100 text-indigo-600">
-            <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 8h2a1 1 0 010 2h-2v2a1 1 0 01-2 0v-2h-2a1 1 0 010-2h2V6a1 1 0 012 0v2zM9 12a3 3 0 100-6 3 3 0 000 6z" /><path stroke-linecap="round" stroke-linejoin="round" d="M3 10v2a7 7 0 0014 0v-2" /></svg>
+      <!-- Iconos atractivos -->
+      <div class="grid gap-6 mt-10">
+        <div class="flex items-start gap-4">
+          <div class="p-3 rounded-xl bg-indigo-100 text-indigo-600 shadow-sm">
+            <svg class="w-6 h-6 sway-icon" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M12 2C10 6 7 10 12 15C17 10 14 6 12 2z" />
+              <rect x="11" y="15" width="2" height="5" rx="1" ry="1" />
+            </svg>
           </div>
           <div>
-            <h4 class="text-lg font-semibold text-gray-900">Ideal para aventuras al aire libre</h4>
-            <p class="text-sm text-gray-600">Este lugar ofrece vistas espectaculares para disfrutar de la naturaleza.</p>
+            <h4 class="text-lg font-bold text-gray-900">Ideal para aventuras</h4>
+            <p class="text-sm text-gray-600">Paisajes naturales para los amantes del aire libre.</p>
           </div>
         </div>
-        <div class="flex gap-4">
-          <div class="p-3 rounded-xl bg-green-100 text-green-600">
-            <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 15a4 4 0 004 4h9a5 5 0 10-4.5-8.5" /><path stroke-linecap="round" stroke-linejoin="round" d="M13 8V4m0 0h4m-4 0L7 8" /></svg>
+
+        <div class="flex items-start gap-4">
+          <div class="p-3 rounded-xl bg-green-100 text-green-600 shadow-sm">
+            <svg class="w-6 h-6 pulse-icon" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+              <circle cx="9" cy="7" r="4" />
+              <circle cx="17" cy="7" r="4" />
+              <path stroke-linecap="round" stroke-linejoin="round" d="M3 21v-2a4 4 0 014-4h10a4 4 0 014 4v2" />
+            </svg>
           </div>
           <div>
-            <h4 class="text-lg font-semibold text-gray-900">Espacios para grupos grandes</h4>
-            <p class="text-sm text-gray-600">Amplias áreas para disfrutar con familia o amigos.</p>
+            <h4 class="text-lg font-bold text-gray-900">Espacios grupales</h4>
+            <p class="text-sm text-gray-600">Perfecto para amigos o familia.</p>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- Reserva -->
-    <div class="bg-white shadow-md rounded-xl p-6">
-      <div class="text-xl text-green-600 font-bold">S/ {{ lugar.costoEntrada }}</div>
-      <h3 class="text-2xl font-semibold text-gray-900 mt-1">Reserva</h3>
+ <!-- Emprendimientos Relacionados -->
+<div class="bg-white shadow-md rounded-xl p-6">
+  <h3 class="text-2xl font-semibold text-gray-900 mb-4">Emprendimientos relacionados</h3>
 
-      <form [formGroup]="dateForm" class="space-y-4 mt-6">
-        <div *ngIf="lugar.tipoServicioId === 3">
-          <div class="flex gap-2">
-            <input formControlName="startDate" type="date" class="form-input w-full" />
-            <input formControlName="endDate" type="date" class="form-input w-full" />
+  <!-- Contenedor con alto fijo y scroll -->
+  <div class="max-h-[500px] overflow-y-auto">
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div *ngFor="let emprendimiento of emprendimientos"
+           class="cursor-pointer border rounded-xl overflow-hidden shadow-sm hover:shadow-lg transition-shadow flex flex-col bg-white"
+           (click)="goToEmprendimiento(emprendimiento)">
+
+        <!-- Imagen con título superpuesto -->
+        <div class="relative w-full h-48">
+          <img 
+            [src]="emprendimiento.imagenes?.length > 0 
+                    ? 'https://twsevdzjdnwjhdysvecm.supabase.co/storage/v1/object/public/emprendimientos/' + emprendimiento.imagenes[0].url 
+                    : 'https://via.placeholder.com/300x200?text=Sin+imagen'" 
+            alt="{{ emprendimiento.nombre }}" 
+            class="w-full h-full object-cover"
+          />
+          <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/60 to-transparent px-4 py-2">
+            <h4 class="text-white text-lg font-semibold truncate">{{ emprendimiento.nombre }}</h4>
           </div>
         </div>
-        <div *ngIf="lugar.tipoServicioId !== 3">
-          <label class="block text-sm font-semibold">Seleccionar fecha</label>
-          <input formControlName="startDate" type="date" class="form-input w-full border border-gray-300 rounded-lg p-2.5 focus:outline-none focus:border-indigo-500" />
-        </div>
-        
-        <div>
-          <label class="block text-sm font-semibold">Personas</label>
-          <input type="number" formControlName="numeroPersonas" min="1" class="form-input w-full border border-gray-300 rounded-lg p-2.5 focus:outline-none focus:border-indigo-500" />
-        </div>
-        
 
-        <div class="text-gray-800">
-          <ng-container *ngIf="totalPrice !== null">
-            <p>Total a pagar: <span class="font-bold text-green-600">{{ totalPrice }} {{ lugar.moneda }}</span></p>
-          </ng-container>
-          <ng-container *ngIf="totalPrice === null && dateForm.valid">
-            <span *ngIf="lugar.tipoServicioId === 3">Selecciona un rango de fechas para ver el precio total.</span>
-            <span *ngIf="lugar.tipoServicioId !== 3">Selecciona un número de personas para ver el precio total.</span>
-          </ng-container>
-        </div>
-      </form>
-
-      <button (click)="addToCart()" class="mt-6 w-full py-3 bg-green-600 text-white rounded-lg hover:bg-green-700">
-        Reservar
-      </button>
+      </div>
     </div>
+  </div>
+</div>
+
   </section>
 
   <!-- Mapa -->
   <section class="py-10">
-    <h2 class="text-2xl font-bold text-gray-800 mb-2">A dónde irás</h2>
+    <h2 class="text-2xl font-bold text-gray-800 mb-2">📌 Ubicación</h2>
     <p class="text-sm text-gray-600 mb-4">{{ lugar.direccion }}</p>
 
-    <div class="rounded-lg overflow-hidden">
+    <div class="rounded-xl overflow-hidden shadow-lg">
       <iframe *ngIf="mapUrl"
               [src]="mapUrl"
               class="w-full h-80"
@@ -136,10 +136,10 @@
 
   <!-- Anfitrión -->
   <section class="py-12 grid grid-cols-1 lg:grid-cols-2 gap-10">
-    <div class="bg-white p-8 rounded-2xl shadow-xl text-center">
+    <div class="bg-white p-8 rounded-2xl shadow-lg text-center border border-gray-100">
       <div class="relative">
-        <img src="img/chatgpt-image.png" class="w-36 h-36 rounded-full object-cover border-4 border-white shadow-md" alt="Anfitrión" />
-        <div class="absolute -bottom-2 -right-2 w-10 h-10 bg-pink-600 rounded-full flex items-center justify-center">
+        <img src="img/chatgpt-image.png" class="w-36 h-36 rounded-full object-cover border-4 border-white shadow-lg mx-auto" alt="Anfitrión" />
+        <div class="absolute -bottom-2 -right-2 w-10 h-10 bg-pink-600 rounded-full flex items-center justify-center shadow-md">
           <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2l4-4m5 2a9 9 0 11-18 0a9 9 0 0118 0z" />
           </svg>
@@ -162,13 +162,15 @@
         <p class="text-gray-700 mb-6 leading-relaxed">
           Los Superanfitriones tienen una amplia experiencia y excelentes valoraciones. Se esfuerzan al máximo para que vivas una estadía inolvidable.
         </p>
-        <h3 class="text-xl font-semibold text-gray-900 mb-3">Información del anfitrión</h3>
+        <h3 class="text-xl font-semibold text-gray-900 mb-3">📖 Información del anfitrión</h3>
         <ul class="text-gray-700 space-y-2">
-          <li><strong>Índice de respuesta:</strong> 100%</li>
-          <li><strong>Tiempo de respuesta:</strong> Menos de una hora</li>
+          <li><strong>📨 Índice de respuesta:</strong> 100%</li>
+          <li><strong>⏱ Tiempo de respuesta:</strong> Menos de una hora</li>
         </ul>
       </div>
-      <button class="mt-8 px-6 py-3 bg-indigo-600 text-white rounded-lg hover:bg-indigo-500 transition">Enviar mensaje al anfitrión</button>
+      <button class="mt-8 px-6 py-3 bg-indigo-600 text-white rounded-lg hover:bg-indigo-500 transition font-semibold">
+        Enviar mensaje al anfitrión
+      </button>
     </div>
   </section>
 </div>
